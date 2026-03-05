@@ -27,9 +27,12 @@ Soon, go to [Auto install](#auto-install)
 
 ### Currently supported games:
 
-__Initial D: Arcade Stage 7AXX__, (You need to install [xact](https://github.com/sakaki91/Teknoparrot.Core-Linux/issues/1) in the prefix).  
-__Wangan Midnight Maximum Tune 6__ *(6, 6R & 6RR)*, Works out of the box!  
 __DenshaDeGo!!__, Works out of the box! However, installing DXVK in the "Core" prefix is ​​highly recommended for better performance, as WineD3D may not be sufficient.  
+__Initial D: Arcade Stage 7AXX__, (You need to install [xact](https://github.com/sakaki91/Teknoparrot.Core-Linux/issues/1) in the prefix).  
+__Wangan Midnight (Teknoparrot + Play)__, It opens, but doesn't offer satisfactory performance results, regardless of the hardware and graphics APIs; however, I believe there's a better native alternative for this model.  
+__Wangan Midnight Maximum Tune 5DX+__, Works out of the box!  
+__Wangan Midnight Maximum Tune 6__ *(6, 6R & 6RR)*, Works out of the box!  
+
 
 ### About the Project:
 
