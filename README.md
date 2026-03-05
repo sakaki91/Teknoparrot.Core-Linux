@@ -8,7 +8,7 @@ This project is 100% free and open source, and aims to help preserve arcade game
 >  It's almost finished; it installs and prepares directories and dependencies, but it does NOT perform the adjustments or injections.  
 >  I'm a bit slow on this due to health reasons, please be kind.  
 
-Primary dependencies: `bash, wget, zenity, wine, winetricks, lutris`
+Primary dependencies: `bash, wget, git, wine, winetricks`
 
 ### Getting Started: 
 - [[ Setup ]](#setup)
@@ -30,7 +30,6 @@ Soon, go to [Auto install](#auto-install)
 
 ### Currently supported games:
 
-Initial D: Arcade Stage 7AXX, (You need to install [xact](https://github.com/sakaki91/Teknoparrot.Core-Linux/issues/1) in the prefix).  
-Wangan Midnight Maximum Tune 6 (6, 6R & 6RR), Works out of the box!  
-
-
+__Initial D: Arcade Stage 7AXX__, (You need to install [xact](https://github.com/sakaki91/Teknoparrot.Core-Linux/issues/1) in the prefix).  
+__Wangan Midnight Maximum Tune 6__ *(6, 6R & 6RR)*, Works out of the box!  
+__DenshaDeGo!!__, Works out of the box! However, installing DXVK in the "Core" prefix is ​​highly recommended for better performance, as WineD3D may not be sufficient.  
