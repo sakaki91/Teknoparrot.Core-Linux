@@ -20,6 +20,7 @@ Soon, go to [Auto install](#auto-install)
 
 ### Auto Install:
 
+    $ cd ~/
     $ git clone https://github.com/sakaki91/Teknoparrot.Core-Linux/
     $ cd Teknoparrot.Core-Linux/
     $ chmod +x install.sh
