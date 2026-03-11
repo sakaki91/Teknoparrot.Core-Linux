@@ -31,11 +31,11 @@ Soon, go to [Auto install](#auto-install)
 
 ### Currently supported games:
 
-__Akai Katana Shin__, It's not working right now, and it won't open.
-__Angry Birds Arcade__,  It's not working right now, and it won't open.
+__Akai Katana Shin__, It's not working right now, and it won't open.  
+__Angry Birds Arcade__,  It's not working right now, and it won't open.  
 __DenshaDeGo!!__, Works out of the box! However, installing DXVK in the "Core" prefix is ​​highly recommended for better performance, as WineD3D may not be sufficient.  
 __Initial D: Arcade Stage 7AXX__, (You need to install [xact](https://github.com/sakaki91/Teknoparrot.Core-Linux/issues/1) in the prefix).  
-__Initial D: Arcade Stage 8 Infinity__, It's not working for now; it gets to the main menu but then crashes.
+__Initial D: Arcade Stage 8 Infinity__, It's not working for now; it gets to the main menu but then crashes.  
 __Mario Kart Arcade GP__, It's not working right now, and it won't open.  
 __Mario Kart Arcade GP 2__, It's not working right now, and it won't open.  
 __Mario Kart Arcade DX USA__, It's not working right now, and it won't open.  
