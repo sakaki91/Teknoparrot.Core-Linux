@@ -24,7 +24,7 @@ creationTree(){
 
 variableTree(){
     DESKTOP_DIR=$(xdg-user-dir DESKTOP)
-    GAME=${TREE}/GAME
+    PROGRAM=${TREE}/PROGRAM
     PREFIX=${TREE}/PREFIX
     RUNNER=${TREE}/RUNNER
     TMP=${TREE}/TMP
@@ -40,7 +40,7 @@ fileExistenceChecker(){
 }
 
 customRunner(){
-    mkdir -p "$TREE"/{GAME,PREFIX,TMP}
+    mkdir -p "$TREE"/{PROGRAM,PREFIX,TMP}
     while true; do
         clear
         echo -e "There are 2 runners available for use:\n\nWineGE (Legacy).\nUMU-Proton (Experimental).\n"
@@ -124,11 +124,11 @@ dependencyInstall(){
     echo "[Installing] DXVK" && winetricks dxvk &> /dev/null
     echo "[Downloading] Teknoparrot (Web-Installer)" && wget -c https://github.com/nzgamer41/TPBootstrapper/releases/latest/download/TPBootstrapper.zip --directory-prefix="$TMP" &> /dev/null
     (
-        echo "[Extracting] Teknoparrot (Web-Installer)" && unzip "$TMP"/TPBootstrapper.zip -d "$GAME" &> /dev/null
-        cd "$GAME"
+        echo "[Extracting] Teknoparrot (Web-Installer)" && unzip "$TMP"/TPBootstrapper.zip -d "$PROGRAM" &> /dev/null
+        cd "$PROGRAM"
         echo -e "[Installing] Teknoparrot (Web-Installer)\n" && wine TPBootstrapper.exe &> /dev/null
     )
-    rm -rf "$GAME"/TPBootstrapper*
+    rm -rf "$PROGRAM"/TPBootstrapper*
     rm -rf "$TMP"
 }
 
@@ -144,7 +144,7 @@ executableCreation(){
         echo "LC_ALL=C" >> Teknoparrot-Linux
         echo "$DRIPRIME_FLAG" >> Teknoparrot-Linux
         echo "export WINEPREFIX=$PREFIX" >> Teknoparrot-Linux
-        echo "$RUNNER_EXEC" "$GAME"/TeknoParrotUi.exe >> Teknoparrot-Linux
+        echo "$RUNNER_EXEC" "$PROGRAM"/TeknoParrotUi.exe >> Teknoparrot-Linux
         chmod +x Teknoparrot-Linux
     )
     while true; do
