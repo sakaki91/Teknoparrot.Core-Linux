@@ -139,6 +139,7 @@ executableCreation(){
         cd "$TREE"
         HEADER="#!/bin/bash"
         DRIPRIME_FLAG="#export DRI_PRIME=0"
+        echo "LC_ALL=C" > Teknoparrot-Linux
         echo "$HEADER" > Teknoparrot-Linux
         echo "LC_ALL=C" >> Teknoparrot-Linux
         echo "$DRIPRIME_FLAG" >> Teknoparrot-Linux
