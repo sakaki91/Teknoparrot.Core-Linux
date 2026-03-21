@@ -3,6 +3,8 @@
 This project is 100% free and open source, and aims to help preserve arcade game emulation in a way that is compatible with the Linux kernel, trying to decouple it as much as possible from the Windows NT kernel.  
 We also __DO NOT USE illegal dumps__ (always use your *legal dumps!*), and we __DO NOT USE proprietary code__ from the __[Teknoparrot](https://teknoparrot.com/en/)__ project, And this works like a translator, a __Linux-Wrapper__ that translates an __NT-Wrapper__.
 
+This project does NOT cover games that depend on APM3.
+
 __Be patient if something doesn't work (this is quite common), I'm doing this on my own, and I'm really trying.__
 
 #### If you would like to support the development of the project:
