@@ -14,7 +14,7 @@ __Be patient if something doesn't work (this is quite common), I'm doing this on
 - [[ Setup ]](#setup)
 - [[ Auto-install ]](#auto-install)
 - [[ Wiki ]](https://github.com/sakaki91/Teknoparrot.Core-Linux/wiki)
-- [[ Currently supported games ]](https://www.github.com/sakaki91/Teknoparrot.Core-Linux/wiki/Currently-supported-games)
+- [[ Currently supported games ]](https://www.github.com/sakaki91/Teknoparrot.Core-Linux/wiki/2.-Currently-supported-games)
 
 ## Setup:
 
