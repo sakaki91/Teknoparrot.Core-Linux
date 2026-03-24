@@ -84,7 +84,7 @@ First, we will create a basic folder structure in your user folder:
     $ cd Teknoparrot/TMP
 
 The guide uses `umu-run` + `umu-proton` 100%, so first install [UMU-Launcher](https://github.com/Open-Wine-Components/umu-launcher#installing-as-user) as --user-install.  
-and install [UMU-Proton]() in the `Steam Compatibility Tools` ($HOME/.local/share/Steam/compatibilitytools.d) folder.
+and install [UMU-Proton](https://github.com/Open-Wine-Components/umu-proton) in the `Steam Compatibility Tools` ($HOME/.local/share/Steam/compatibilitytools.d) folder.
 
 Let's start by defining the Environment Variables:
 
