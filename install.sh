@@ -1,7 +1,7 @@
 #!/bin/bash
 
 hostDependencyChecker(){
-    [ ! -f /usr/bin/wine ] && echo -e "$ERROR_LOG Wine not found" && exit
+    [[ -f /usr/bin/wine || ! -f /opt/wine-staging/bin/wine ]] && echo -e "$ERROR_LOG Wine not found" && exit
     [ ! -f /usr/bin/winetricks ] && echo -e "$ERROR_LOG Winetricks not found" && exit
     [ ! -f /usr/bin/bash ] && echo -e "$ERROR_LOG Bash not found" && exit
     [ ! -f /usr/bin/wget ] && echo -e "$ERROR_LOG Wget not found" && exit
@@ -64,7 +64,7 @@ executableCreation(){
 }
 
 ARL_NAME="Arcade Wrapper Linux"
-ARL_VERSION="3.1-5wr (wine return)"
+ARL_VERSION="3.1-6"
 ARL_LOG="/dev/null"
 DONE_LOG="\e[1;32m*\033[0m"
 WAIT_LOG="\e[1;33m*\033[0m"
