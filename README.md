@@ -44,7 +44,7 @@ __Script Dependencies:__
 `wget`  
 `unzip`  
 `tar`  
-`wine` # wine-staging recommended!  
+`wine-staging` [[link]](https://gitlab.winehq.org/wine/wine-staging)  
 `winetricks`  
 
 Installation:
