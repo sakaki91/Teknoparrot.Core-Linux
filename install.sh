@@ -4,7 +4,7 @@ hostDependencyChecker(){
     dependencies=(wine winetricks bash wget unzip tar zenity)
     for cmd in "${dependencies[@]}"; do
         if ! command -v "$cmd" >/dev/null 2>&1; then
-            echo -e "$ERROR_LOG $cmd not found" && exit 1
+            printf "$NORMAL_LOG $cmd not found. $ERROR_LOG\n" && exit 1
         fi
     done
 }
@@ -24,32 +24,39 @@ atomicTree(){
 dependencyInstall(){
     clear
     export WINEPREFIX=${PREFIX}
-    echo -e "$WAIT_LOG Wineboot." && wineboot -u &> $ARL_LOG
+    printf "$NORMAL_LOG Wineboot. ($PREFIX)" && wineboot -u &> $ARL_LOG
         if [ -d "$PREFIX"/drive_c ]; then
-            echo -e " $DONE_LOG Structure created!"
-            echo -e "$WAIT_LOG Downloading dependencies."
+            printf " $DONE_LOG\n$NORMAL_LOG Downloading dependencies."
             wget -c https://aka.ms/dotnet/8.0/dotnet-runtime-win-x64.exe --directory-prefix="$TMP" &>> $ARL_LOG
             wget -c https://aka.ms/dotnet/8.0/windowsdesktop-runtime-win-x64.exe --directory-prefix="$TMP" &>> $ARL_LOG
+            [[ -f "$TMP"/dotnet-runtime-win-x64.exe ]] && dNETR_PRESENT=1
+            [[ -f "$TMP"/windowsdesktop-runtime-win-x64.exe ]] && dNETW_PRESENT=1
+            if [[ $dNETR_PRESENT == 1 || $dNETW_PRESENT == 1 ]]; then
+                printf " $DONE_LOG\n$NORMAL_LOG Installing dependencies."
+                wine "$TMP"/dotnet-runtime-win-x64.exe /install /quiet /norestart &>> $ARL_LOG
+                wine "$TMP"/windowsdesktop-runtime-win-x64.exe /install /quiet /norestart &>> $ARL_LOG
+            else
+                printf " $ERROR_LOG\n" && exit
+            fi
             winetricks dxvk &>> $ARL_LOG
-            echo -e "$WAIT_LOG Installing dependencies."
-            wine "$TMP"/dotnet-runtime-win-x64.exe /install /quiet /norestart &>> $ARL_LOG
-            wine "$TMP"/windowsdesktop-runtime-win-x64.exe /install /quiet /norestart &>> $ARL_LOG
-            echo -e "$WAIT_LOG Downloading TeknoParrot (Web-Installer)."
+            printf " $DONE_LOG\n$NORMAL_LOG Downloading TeknoParrot (Web-Installer)."
             wget -c https://github.com/nzgamer41/TPBootstrapper/releases/latest/download/TPBootstrapper.zip --directory-prefix="$TMP" &>> $ARL_LOG
-            [ ! -f "$TMP"/TPBootstrapper.zip ] && echo -e " $ERROR_LOG TPBootstrapper was not downloaded." && exit
-            unzip "$TMP"/TPBootstrapper.zip -d "$PROGRAM" &>> $ARL_LOG
-            [ ! -f "$PROGRAM"/TPBootstrapper.exe ] && echo -e " $ERROR_LOG TPBootstrapper was not extracted." && echo -e " $ERROR_LOG TPBootstrapper was not found." && exit
-            (
-            cd "$PROGRAM"
-            wine TPBootstrapper.exe &>> $ARL_LOG
-            [ -f "$PROGRAM"/TeknoParrotUi.exe ] && echo -e " $DONE_LOG TeknoParrot installed!"
-            [ ! -f "$PROGRAM"/TeknoParrotUi.exe ] && echo -e " $ERROR_LOG TeknoParrot not installed." && exit
-            )
+            if [ -f "$TMP"/TPBootstrapper.zip ]; then
+                (
+                unzip "$TMP"/TPBootstrapper.zip -d "$PROGRAM" &>> $ARL_LOG
+                cd "$PROGRAM"
+                wine TPBootstrapper.exe &>> $ARL_LOG
+                [ -f "$PROGRAM"/TeknoParrotUi.exe ] && printf " $DONE_LOG\n"
+                [ ! -f "$PROGRAM"/TeknoParrotUi.exe ] && printf " $ERROR_LOG\n" && exit
+                )
+            else
+                printf "$ERROR_LOG\n" && exit
+            fi
             ls $TREE &>> $ARL_LOG && ls $TREE/* &>> $ARL_LOG
             rm -rf "$PROGRAM"/TPBootstrapper*
-            rm -rf "$TMP" && echo -e " $DONE_LOG Temporary files cleared!"
+            rm -rf "$TMP" && printf "$NORMAL_LOG Temporary files cleared. $DONE_LOG\n"
        else
-            echo -e " $ERROR_LOG Structure not created." && exit
+            printf " $ERROR_LOG\n" && exit
        fi
 }
 
@@ -65,11 +72,11 @@ executableCreation(){
 }
 
 ARL_NAME="Arcade Wrapper Linux/Unix-like"
-ARL_VERSION="3.1-7"
+ARL_VERSION="3.1-8"
 ARL_LOG="/dev/null"
-DONE_LOG="\e[1;32m==>\033[0m"
-WAIT_LOG="\e[1;33m==>\033[0m"
-ERROR_LOG="\e[1;31m==>\033[0m"
+DONE_LOG="\e[1;32mOK\033[0m"
+NORMAL_LOG="\e[1;34m*\033[0m"
+ERROR_LOG="\e[1;31mERROR\033[0m"
 TREE=${HOME}/TeknoParrot
 
 case $1 in
@@ -79,6 +86,7 @@ case $1 in
     ;;
     "--custom-dir")
         TREE=$(zenity --file-selection --directory --title "Select your desired directory:")/TeknoParrot
+        [[ $2 == "--debug" ]] && ARL_LOG=$HOME/AR.LOG
     ;;
     "--debug")
         ARL_LOG=$HOME/AR.LOG
