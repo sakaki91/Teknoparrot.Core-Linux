@@ -13,10 +13,10 @@ Please be patient if something doesn't work (this is quite common), I'm doing th
 Did you encounter problems? *[Read this](https://github.com/sakaki91/Arcade.Runtime-Linux/wiki/1.-About-the-Project#how-does-the-error-report-work).*
 
 #### Getting Started: 
+First, [check the compatibility list](https://www.github.com/sakaki91/Arcade.Runtime-Linux/wiki/2.-Currently-supported-games) (as some games require different settings and may not work efficiently with my wrapper, since there are better native options).  
 * [[ Auto-install ]](#auto-install)
 * [[ Manual-install ]](#manual-install)
 * [[ Wiki ]](https://github.com/sakaki91/Arcade.Runtime-Linux/wiki)
-* [[ Currently supported games ]](https://www.github.com/sakaki91/Arcade.Runtime-Linux/wiki/2.-Currently-supported-games)
 
 #### Auto Install:
 
