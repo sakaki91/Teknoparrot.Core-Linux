@@ -1,13 +1,14 @@
-__Arcade.Wrapper-Linux.  
+__Arcade Wrapper Linux.  
 (formerly Teknoparrot.Core-Linux).__
 
-This project is 100% free and open source, and aims to help preserve arcade game emulation in a way that is compatible with the Linux kernel, attempting to decouple it as much as possible from the Windows NT kernel, essentially serving as a Linux wrapper that translates the NT wrapper (TeknoParrot).  
+This project is 100% free and open source, and aims to help preserve arcade game emulation in a way that is compatible with the Linux kernel, attempting to decouple it as much as possible from the Windows NT kernel, essentially serving as a Linux wrapper that translates the NT wrapper (TeknoParrot), we do NOT use illegal dumps or proprietary code from the original projects.  
 
-This guide does NOT use illegal dumps or proprietary code from the original projects, and does not cover __APM3 games__ or games that run with __ElfLdr2__ *[(see why)](https://github.com/sakaki91/Arcade.Wrapper-Linux/wiki/1.-About-the-Project#why-is-there-no-support-for-apm3-and-elfldr2)*, it is merely an alternative method to make something that already exists work on other kernels (use your legal dumps).
+And it doesn't cover __APM3 games__ or games that run with __ElfLdr2__ *[(see why)](https://github.com/sakaki91/Arcade.Wrapper-Linux/wiki/1.-About-the-Project#why-is-there-no-support-for-apm3-and-elfldr2)*, it is merely an alternative method to make something that already exists work on other kernels (use your legal dumps).  
 
 Please be patient if something doesn't work (this is quite common), most problems are "mapped in the dark" precisely because of the absence of the source code. I'm doing this myself and trying my best.  
 
-#### If you would like to support the project's development (This is entirely optional, but it would make me happy):
+__If you would like to support the project's development (This is entirely optional, but it would make me happy):__  
+
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/sakaki91)  
 
 Did you encounter problems? *[Read this](https://github.com/sakaki91/Arcade.Runtime-Linux/wiki/1.-About-the-Project#how-does-the-error-report-work).*
@@ -20,10 +21,7 @@ First, [check the compatibility list](https://www.github.com/sakaki91/Arcade.Run
 * [[ Wiki ]](https://github.com/sakaki91/Arcade.Runtime-Linux/wiki)
 
 #### Auto Install:
-__Script Dependencies:__  
-*Don't know how to install it on your distribution? [Check this out](https://github.com/sakaki91/Arcade.Runtime-Linux/wiki/3.-Dependencies-and-Distros-Hardware-tested.).*
-
-    bash git zenity wget unzip tar wine-staging
+__Script Dependencies:__ *[Check this out](https://github.com/sakaki91/Arcade.Runtime-Linux/wiki/3.-Dependencies-and-Distros-Hardware-tested.).*
 
 Installation:
 
