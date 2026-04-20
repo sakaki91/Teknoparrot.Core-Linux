@@ -2,7 +2,7 @@
 
 ERROR_LOG="\e[1;31m"
 NC="\033[0m"
-PROJECT_HEADER="awl 3.2-4"
+PROJECT_HEADER="awl 3.2-5"
 AWL_LOCATION=""
 TEKNO_LOCATION=""
 PREFIX_LOCATION=""
@@ -33,7 +33,7 @@ teknoRunWrapper(){
     if [[ $RUNNER == "wine" ]]; then
         LC_ALL=en_US.UTF-8 LC_NUMERIC=en_US.UTF-8 LANG=en_US.UTF-8 WINEPREFIX=$AWL_LOCATION/pfx wine $AWL_LOCATION/bin/TeknoParrotUi.exe &>> /dev/null
     elif [[ $RUNNER == "umu" ]]; then
-        LC_ALL=en_US.UTF-8 LC_NUMERIC=en_US.UTF-8 LANG=en_US.UTF-8 GAMEID=0 PROTONPATH="$HOME"/.local/share/Steam/compatibilitytools.d/UMU-Proton-10.0-4/ WINEPREFIX=$AWL_LOCATION/pfx umu-run $AWL_LOCATION/bin/TeknoParrotUi.exe &>> /dev/null
+        LC_ALL=en_US.UTF-8 LC_NUMERIC=en_US.UTF-8 LANG=en_US.UTF-8 GAMEID=0 PROTONPATH="$HOME"/.local/share/Steam/compatibilitytools.d/UMU-Proton-10.0-4/ WINEPREFIX=$AWL_LOCATION/pfx_umu umu-run $AWL_LOCATION/bin/TeknoParrotUi.exe &>> /dev/null
     fi
     printf "done!\n"
 }
