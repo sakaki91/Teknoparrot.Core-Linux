@@ -31,6 +31,8 @@ Installation:
     $ git pull
     $ chmod +x install.sh
     $ ./install.sh
+	$ cd path-to-your-tp-installation/
+	$ ./awl
 
 #### Manual Install:
 Some games require extra adjustments to the `/etc/locale.gen` file, first, check if `en_US.utf8` is present in your locale file:
