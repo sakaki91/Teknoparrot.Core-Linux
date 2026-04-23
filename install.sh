@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SCRIPT_VERSION="3.2-7"
+SCRIPT_VERSION="3.2-8"
 DXVK_VERSION="2.7.1"
 UMU_VERSION="10.0-4"
 UMU_MONO_VERSION="10.0.0"
@@ -81,10 +81,12 @@ rm -rf "$PREFIX"/drive_c/tmp "$PREFIX_UMU"/drive_c/tmp
 }
 
 executableCreation(){
+    sed -i "s|^\s*PROJECT_VERSION=.*|PROJECT_VERSION=\"$SCRIPT_VERSION\"|" awl.sh
     sed -i "s|^\s*AWL_LOCATION=.*|AWL_LOCATION=\"$TREE\"|" awl.sh
     sed -i "s|^\s*TEKNO_LOCATION=.*|TEKNO_LOCATION=\"$PROGRAM\"|" awl.sh
-    sed -i "s|^\s*PREFIX_LOCATION=.*|PREFIX_LOCATION=\"$PREFIX\"|" awl.sh
     sed -i "s|^\s*UMU_LOCATION=.*|UMU_LOCATION=\"$TREE/umu\"|" awl.sh
+    sed -i "s|^\s*PREFIX_LOCATION=.*|PREFIX_LOCATION=\"$PREFIX\"|" awl.sh
+    sed -i "s|^\s*PREFIX_UMU_LOCATION=.*|PREFIX_UMU_LOCATION=\"$PREFIX_UMU\"|" awl.sh
     chmod +x awl.sh
     cp awl.sh "$TREE"/awl
     ln -sf "$TREE"/awl "$HOME"/.local/bin/awl
