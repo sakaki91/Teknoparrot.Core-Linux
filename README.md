@@ -30,42 +30,20 @@ Installation:
     $ cd Arcade.Wrapper-Linux
     $ chmod +x install.sh
     $ ./install.sh
-	$ cd path-to-your-tp-installation/
-	$ ./awl
+	$ awl
 
 #### Manual Install:
-Some games require extra adjustments to the `/etc/locale.gen` file, first, check if `en_US.utf8` is present in your locale file:
-
-	$ locale -a
-
-If the `en_US.UTF-8` is present, simply ignore the steps below that involve locale-gen!
-
-	$ sudo nano /etc/locale.gen
-
-Just remove the "#" from the beginning of `en_US.UTF-8` and save:
-
-	$ sudo locale-gen
-
-After that, you should see something similar to this:
-
-    [user@host]$ sudo locale-gen
-    Generating locales...
-    en_US.UTF-8... done
-    Generation complete.
-
-And now you can proceed with the manual installation!
-
 First, we will create a basic folder structure in your user folder:
 
     $ cd ~
-    $ mkdir -p TeknoParrot/{PROGRAM,PREFIX,TMP}
-    $ cd TeknoParrot/TMP
+    $ mkdir -p TeknoParrot/{bin,pfx,tmp}
+    $ cd TeknoParrot/tmp
 
 Let's start by defining the Environment Variables:
 
-    $ export WINEPREFIX=$HOME/Teknoparrot/PREFIX
-	$ export LC_ALL=C
-	$ export LC_NUMERIC=C
+    $ export WINEPREFIX=$HOME/TeknoParrot/pfx
+	$ export LC_ALL=en_US.UTF-8
+	$ export LC_NUMERIC=en_US.UTF-8
 	$ export LANG=en_US.UTF-8
 
 Now we will download and install the dependencies in the prefix:
@@ -76,32 +54,33 @@ Now we will download and install the dependencies in the prefix:
     $ wget -c https://github.com/nzgamer41/TPBootstrapper/releases/latest/download/TPBootstrapper.zip
     $ wine dotnet-runtime-win-x64.exe
     $ wine windowsdesktop-runtime-win-x64.exe
-    $ unzip TPBootstrapper.zip -d ~/Teknoparrot/PROGRAM
-    $ wine ~/TeknoParrot/PROGRAM/TPBootstrapper.exe
+    $ unzip TPBootstrapper.zip -d ~/TeknoParrot/bin
+    $ wine ~/TeknoParrot/bin/TPBootstrapper.exe
 
-Following this, you should be able to use Teknoparrot normally. 
+Following this, you should be able to use TeknoParrot normally. 
 
 Below is an example of how the program would run:
 
-    $ LC_ALL=C LC_NUMERIC=C LANG=en_US.UTF-8 WINEPREFIX=$HOME/TeknoParrot/PREFIX wine $HOME/TeknoParrot/PROGRAM/TeknoParrotUi.exe
+    $ LC_ALL=en_US.UTF-8 LC_NUMERIC=en_US.UTF-8 LANG=en_US.UTF-8 WINEPREFIX=$HOME/TeknoParrot/pfx wine $HOME/TeknoParrot/bin/TeknoParrotUi.exe
 
-Inconvenient, isn't it? You can create a small initializer (which the script even does automatically in the [(Auto-install)](#auto-install) to automate this "bible" of code:
+Inconvenient, isn't it? You can [download awl](https://github.com/sakaki91/Arcade.Wrapper-Linux/blob/main/awl.sh), a small initializer that already manages all of this, to automate this code "bible." You would only need to add the paths manually to the script using a text editor, in the following lines:
 
-	$ touch TeknoParrot
+	AWL_LOCATION="" # project tree folder (normally: ~/.local/share/awl)  
+	TEKNO_LOCATION="" # bin folder  
+	PREFIX_LOCATION="" # pfx folder  
 
-Then edit the file with [nano](https://www.nano-editor.org/) and place this information inside the file:
+Next, you can move this file to your local binaries folder and add it to your PATH (if it's not already there):
 
-	#!/bin/bash
-	export LC_ALL=C
-	export LC_NUMERIC=C
-	export LANG=en_US.UTF-8
-	export WINEPREFIX=$HOME/TeknoParrot/PREFIX
-	wine $HOME/TeknoParrot/PROGRAM/TeknoParrotUi.exe
+	$ mv awl.sh ~/.local/bin/awl
+	$ nano ~/.bashrc
 
-And after that:
+Next, add and save:
 
-    $ chmod +x TeknoParrot
-    $ ./TeknoParrot
+	export PATH="$HOME/.local/bin:$PATH"
+
+Next, you can run the script with:
+
+	$ awl
 
 #### Extra Tweaks:
 We'll use some paths like absolute-paths as examples, don't forget to adapt them to your directories!  
