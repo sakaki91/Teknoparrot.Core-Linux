@@ -1,0 +1,105 @@
+#!/bin/bash
+
+ERROR_LOG="\e[1;31m"
+NC="\033[0m"
+
+PROJECT_HEADER="awl"
+TREE=${HOME}/.local/share/awl
+PROGRAM=${TREE}/bin
+TMP=${TREE}/tmp
+PREFIX=${TREE}/pfx
+PREFIX_UMU=${TREE}/pfx_umu
+UMU_LOCATION=${TREE}/umu
+
+playRunWrapper(){
+    while true; do
+        FLATPAK_DIR=$(flatpak --installations)
+        PLAY_ROM_DIR="$HOME/.var/app/org.purei.Play/config/Play Data Files/arcaderoms"
+        [[ ! -d "$FLATPAK_DIR"/app/org.purei.Play ]] && printf "$ERROR_LOG* Emulator not found (Play!). $NC\n" && exit
+        [[ ! -d "$TREE"/play ]] && ln -s "$PLAY_ROM_DIR" "$TREE"/play
+        printf "wait...\n"
+        PLAY_ROM_SELECTION=$(zenity --file-selection --directory --title="Select the desired ROM (Play, Folder only):")
+        if [[ -z "$PLAY_ROM_SELECTION" ]]; then
+            printf "\n$ERROR_LOG* No rom selected. $NC\nWould you like to try again?\n"
+            read -p "[Y/n] " zenityDecision
+            if [[ $zenityDecision == "N" || $zenityDecision == "n" ]]; then
+                break
+            fi
+        else
+            PLAY_ROM=$(basename $PLAY_ROM_SELECTION)
+            flatpak run org.purei.Play --arcade "$PLAY_ROM" &> /dev/null
+            printf "done!\n"
+            break
+        fi
+    done
+}
+
+dolphinRunWrapper(){
+    while true; do
+        FLATPAK_DIR=$(flatpak --installations)
+        [[ ! -d "$FLATPAK_DIR"/app/org.DolphinEmu.dolphin-emu ]] && printf "$ERROR_LOG* Emulator not found (Dolphin). $NC\n" && exit
+        printf "wait...\n"
+        DOLPHIN_ROM=$(zenity --file-selection --title="Select the desired ROM (Dolphin):" )
+        if [[ -z "$DOLPHIN_ROM" ]]; then
+            printf "\n$ERROR_LOG* No rom selected. $NC\nWould you like to try again?\n"
+            read -p "[Y/n] " zenityDecision
+            if [[ $zenityDecision == "N" || $zenityDecision == "n" ]]; then
+                break
+            fi
+        else
+            flatpak run org.DolphinEmu.dolphin-emu "$DOLPHIN_ROM" &> /dev/null
+            printf "done!\n"
+            break
+        fi
+    done
+}
+
+teknoRunWrapper(){
+    printf "wait...\n"
+    LC_ALL=en_US.UTF-8
+    LC_NUMERIC=en_US.UTF-8
+    LANG=en_US.UTF-8
+    if [[ $RUNNER == "wine" ]]; then
+        WINEPREFIX=$PREFIX wine $PROGRAM/TeknoParrotUi.exe
+    elif [[ $RUNNER == "umu" ]]; then
+        [[ ! -f "$HOME"/.local/bin/umu-run ]] && printf "\e[1;31mumu-run not found\e[0m - https://github.com/Open-Wine-Components/umu-launcher#installing-as-user.\n" && exit
+        [[ ! -d "$TREE"/umu ]] && printf "\e[1;31mumu-proton not found\e[0m - https://github.com/Open-Wine-Components/umu-proton.\n" && exit
+        GAMEID=0 PROTONPATH="$UMU_LOCATION" WINEPREFIX=$PREFIX_UMU umu-run $PROGRAM/TeknoParrotUi.exe
+    fi
+    printf "done!\n"
+}
+
+clear
+printf "$PROJECT_HEADER (type: help)\n"
+while true; do
+	read -p "[main] $ " mainIO
+    case $mainIO in
+        "help")
+            printf "\e[1m[@system]:$NC\nhelp\t\t\tshow this message.\nclear\t\t\tclear the screen.\nexit\t\t\tkill the process.\n\e[1m[@wrapper]:$NC\nplay\t\t\tOpens the emulator compatible with Namco System [147/246].\ndolphin\t\t\tOpens the emulator compatible with Sega Triforce.\ntekno-wine\t\tOpens the wine-wrapper compatible with TeknoParrot/OpenParrot and their respective platforms.\ntekno-umu\t\tOpens the umu-wrapper compatible with TeknoParrot/OpenParrot and their respective platforms.\n"
+        ;;
+        "clear")
+            clear
+            printf "$PROJECT_HEADER (type: help)\n"
+        ;;
+        "exit")
+            break
+        ;;
+        "play")
+            playRunWrapper
+        ;;
+        "dolphin")
+            dolphinRunWrapper
+        ;;
+        "tekno-wine")
+            RUNNER=wine
+            teknoRunWrapper
+        ;;
+        "tekno-umu")
+            RUNNER=umu
+            teknoRunWrapper
+        ;;
+        *)
+            printf "$ERROR_LOG* Invalid option. $NC\n"
+        ;;
+    esac
+done

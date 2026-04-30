@@ -1,16 +1,17 @@
 #!/bin/bash
 
-SCRIPT_VERSION="3.2-8"
+SCRIPT_VERSION="3.2-9"
 DXVK_VERSION="2.7.1"
 UMU_VERSION="10.0-4"
 UMU_MONO_VERSION="10.0.0"
+UMU_PRESENT=1
 TREE=${HOME}/.local/share/awl
 
 primaryDependencyChecker(){
-    dependencies=(umu-run wine bash wget unzip tar zenity)
+    dependencies=(wine bash wget unzip tar zenity)
     for cmd in "${dependencies[@]}"; do
         if ! command -v "$cmd" >/dev/null 2>&1; then
-            printf "$NORMAL_LOG $cmd not found.\n" && exit 1
+            printf "$cmd not found.\n" && exit 1
         fi
     done
 }
@@ -26,26 +27,21 @@ atomicTree(){
     [ -d "$TMP" ] && rm -r "$TMP"
     [ -d "$PREFIX" ] && rm -r "$PREFIX"
     [ -d "$PREFIX_UMU" ] && rm -r "$PREFIX_UMU"
-    mkdir -p "$TREE"/{bin,pfx,pfx_umu,tmp}
+    mkdir -p "$TREE"/{bin,pfx,tmp}
 }
 
 dependencyInstall(){
-#dependencies (download + extract) ==>
+#wine-dependencies (download + extract) ==>
     wget -c https://aka.ms/dotnet/8.0/dotnet-runtime-win-x64.exe --directory-prefix="$TMP"
     wget -c https://aka.ms/dotnet/8.0/windowsdesktop-runtime-win-x64.exe --directory-prefix="$TMP"
     wget -c https://download.microsoft.com/download/8/4/a/84a35bf1-dafe-4ae8-82af-ad2ae20b6b14/directx_Jun2010_redist.exe --directory-prefix="$TMP"
     wget -c https://github.com/doitsujin/dxvk/releases/download/v$DXVK_VERSION/dxvk-$DXVK_VERSION.tar.gz --directory-prefix="$TMP"
-    wget -c https://github.com/Open-Wine-Components/umu-proton/releases/download/UMU-Proton-$UMU_VERSION/UMU-Proton-$UMU_VERSION.tar.gz --directory-prefix="$TMP"
-    wget -c https://github.com/wine-mono/wine-mono/releases/download/wine-mono-$UMU_MONO_VERSION/wine-mono-$UMU_MONO_VERSION-x86.msi --directory-prefix="$TMP"
     [ ! -f "$TMP"/dotnet-runtime-win-x64.exe ] && exit
     [ ! -f "$TMP"/windowsdesktop-runtime-win-x64.exe ] && exit
     [ ! -f "$TMP"/directx_Jun2010_redist.exe ] && exit
     [ ! -f "$TMP"/dxvk-$DXVK_VERSION.tar.gz ] && exit
-    [ ! -f "$TMP"/wine-mono-$UMU_MONO_VERSION-x86.msi ] && exit
-    tar -xvf "$TMP"/UMU-Proton-$UMU_VERSION.tar.gz --directory "$TMP"
     tar -xvf "$TMP"/dxvk-$DXVK_VERSION.tar.gz --directory "$TMP"
-    mv "$TMP"/UMU-Proton-$UMU_VERSION -T "$TREE"/umu
-#wine =>
+#wine ==>
     export WINEPREFIX=${PREFIX}
     wineboot -u
     wine "$TMP"/dotnet-runtime-win-x64.exe /install /quiet /norestart
@@ -59,16 +55,26 @@ dependencyInstall(){
     wine reg add "HKEY_CURRENT_USER\Software\Wine\DllOverrides" /v d3d8 /d native,builtin /f
     wine reg add "HKEY_CURRENT_USER\Software\Wine\DllOverrides" /v d3d9 /d native,builtin /f
     wine reg add "HKEY_CURRENT_USER\Software\Wine\DllOverrides" /v dxgi /d native,builtin /f
-#umu ==>
-    export GAMEID=0
-    export PROTONPATH="$TREE"/umu
-    export WINEPREFIX=${PREFIX_UMU}
-    umu-run wineboot -u
-    umu-run msiexec /i "$TMP"/wine-mono-$UMU_MONO_VERSION-x86.msi
-    umu-run "$TMP"/dotnet-runtime-win-x64.exe /install /quiet /norestart
-    umu-run "$TMP"/windowsdesktop-runtime-win-x64.exe /install /quiet /norestart
-    umu-run "$TMP"/directx_Jun2010_redist.exe /Q /C /T:"C:\tmp"
-    umu-run "$PREFIX_UMU"/drive_c/tmp/DXSETUP.exe /silent
+    if [ $UMU_PRESENT == 1 ]; then
+        [[ ! -f "$HOME"/.local/bin/umu-run ]] && printf "\e[1;31mumu-run not found\e[0m - (https://github.com/Open-Wine-Components/umu-launcher#installing-as-user).\n" && exit
+        mkdir -p "$TREE"/pfx_umu
+        #umu-dependencies (download + extract) ==>
+        wget -c https://github.com/Open-Wine-Components/umu-proton/releases/download/UMU-Proton-$UMU_VERSION/UMU-Proton-$UMU_VERSION.tar.gz --directory-prefix="$TMP"
+        wget -c https://github.com/wine-mono/wine-mono/releases/download/wine-mono-$UMU_MONO_VERSION/wine-mono-$UMU_MONO_VERSION-x86.msi --directory-prefix="$TMP"
+        [ ! -f "$TMP"/wine-mono-$UMU_MONO_VERSION-x86.msi ] && exit
+        tar -xvf "$TMP"/UMU-Proton-$UMU_VERSION.tar.gz --directory "$TMP"
+        mv "$TMP"/UMU-Proton-$UMU_VERSION -T "$TREE"/umu
+        #umu ==>
+        export GAMEID=0
+        export PROTONPATH="$TREE"/umu
+        export WINEPREFIX=${PREFIX_UMU}
+        umu-run wineboot -u
+        umu-run msiexec /i "$TMP"/wine-mono-$UMU_MONO_VERSION-x86.msi
+        umu-run "$TMP"/dotnet-runtime-win-x64.exe /install /quiet /norestart
+        umu-run "$TMP"/windowsdesktop-runtime-win-x64.exe /install /quiet /norestart
+        umu-run "$TMP"/directx_Jun2010_redist.exe /Q /C /T:"C:\tmp"
+        umu-run "$PREFIX_UMU"/drive_c/tmp/DXSETUP.exe /silent
+    fi
 #tekno ==>
     (
     wget -c https://github.com/nzgamer41/TPBootstrapper/releases/latest/download/TPBootstrapper.zip --directory-prefix="$TMP"
@@ -77,37 +83,26 @@ dependencyInstall(){
     wine TPBootstrapper.exe
     rm -rf "$PROGRAM"/TPBootstrapper* "$TMP"
     )
-rm -rf "$PREFIX"/drive_c/tmp "$PREFIX_UMU"/drive_c/tmp
-}
-
-executableCreation(){
-    sed -i "s|^\s*PROJECT_VERSION=.*|PROJECT_VERSION=\"$SCRIPT_VERSION\"|" awl.sh
-    sed -i "s|^\s*AWL_LOCATION=.*|AWL_LOCATION=\"$TREE\"|" awl.sh
-    sed -i "s|^\s*TEKNO_LOCATION=.*|TEKNO_LOCATION=\"$PROGRAM\"|" awl.sh
-    sed -i "s|^\s*UMU_LOCATION=.*|UMU_LOCATION=\"$TREE/umu\"|" awl.sh
-    sed -i "s|^\s*PREFIX_LOCATION=.*|PREFIX_LOCATION=\"$PREFIX\"|" awl.sh
-    sed -i "s|^\s*PREFIX_UMU_LOCATION=.*|PREFIX_UMU_LOCATION=\"$PREFIX_UMU\"|" awl.sh
-    chmod +x awl.sh
-    cp awl.sh "$TREE"/awl
+    rm -rf "$PREFIX"/drive_c/tmp "$PREFIX_UMU"/drive_c/tmp
+    chmod +x awl
+    cp awl "$TREE"/awl
     ln -sf "$TREE"/awl "$HOME"/.local/bin/awl
 }
 
 case $1 in
     "--help")
-        echo -e "--help\t\tShow this message.\n--version\tShow wrapper version.\n--custom-dir\tWith this flag you can choose a custom installation directory."
+        echo -e "--help\t\tShow this message.\n--version\tShow wrapper version.\n--ignore-umu\tthis flag is usually the default in installations, as umu is only used for isolated titles like the wmmt-series."
         exit
     ;;
     "--version")
         printf "awl $SCRIPT_VERSION\n"
         exit
     ;;
-    "--custom-dir")
-        TREE=$(zenity --file-selection --directory --title "Select your desired directory:")/awl
+    "--ignore-umu")
+        UMU_PRESENT=0
     ;;
 esac
 
 primaryDependencyChecker
-git pull
 atomicTree
 dependencyInstall
-executableCreation
