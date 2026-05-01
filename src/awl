@@ -75,7 +75,7 @@ while true; do
 	read -p "[main] $ " mainIO
     case $mainIO in
         "help")
-            printf "\e[1m[@system]:$NC\nhelp\t\t\tshow this message.\nclear\t\t\tclear the screen.\nexit\t\t\tkill the process.\n\e[1m[@wrapper]:$NC\nplay\t\t\tOpens the emulator compatible with Namco System [147/246].\ndolphin\t\t\tOpens the emulator compatible with Sega Triforce.\ntekno-wine\t\tOpens the wine-wrapper compatible with TeknoParrot/OpenParrot and their respective platforms.\ntekno-umu\t\tOpens the umu-wrapper compatible with TeknoParrot/OpenParrot and their respective platforms.\n"
+            printf "\e[1m[@system]:$NC\nhelp\t\t\tshow this message.\nclear\t\t\tclear the screen.\nexit\t\t\tkill the process.\n\e[1m[@wrapper]:$NC\ngame-list\t\tShows the compatibility list\nplay\t\t\tOpens the emulator compatible with Namco System [147/246].\ndolphin\t\t\tOpens the emulator compatible with Sega Triforce.\ntekno-wine\t\tOpens the wine-wrapper compatible with TeknoParrot/OpenParrot and their respective platforms.\ntekno-umu\t\tOpens the umu-wrapper compatible with TeknoParrot/OpenParrot and their respective platforms.\n"
         ;;
         "clear")
             clear
@@ -83,6 +83,9 @@ while true; do
         ;;
         "exit")
             break
+        ;;
+        "game-list")
+            "$HOME"/.local/share/awl/game-list
         ;;
         "play")
             playRunWrapper

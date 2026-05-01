@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SCRIPT_VERSION="3.2-9"
+SCRIPT_VERSION="3.3.0"
 DXVK_VERSION="2.7.1"
 UMU_VERSION="10.0-4"
 UMU_MONO_VERSION="10.0.0"
@@ -77,16 +77,20 @@ dependencyInstall(){
     fi
 #tekno ==>
     (
-    wget -c https://github.com/nzgamer41/TPBootstrapper/releases/latest/download/TPBootstrapper.zip --directory-prefix="$TMP"
-    unzip "$TMP"/TPBootstrapper.zip -d "$PROGRAM"
-    cd "$PROGRAM"
-    wine TPBootstrapper.exe
-    rm -rf "$PROGRAM"/TPBootstrapper* "$TMP"
+        wget -c https://github.com/nzgamer41/TPBootstrapper/releases/latest/download/TPBootstrapper.zip --directory-prefix="$TMP"
+        unzip "$TMP"/TPBootstrapper.zip -d "$PROGRAM"
+        cd "$PROGRAM"
+        wine TPBootstrapper.exe
+        rm -rf "$PROGRAM"/TPBootstrapper* "$TMP"
     )
-    rm -rf "$PREFIX"/drive_c/tmp "$PREFIX_UMU"/drive_c/tmp
-    chmod +x awl
-    cp awl "$TREE"/awl
-    ln -sf "$TREE"/awl "$HOME"/.local/bin/awl
+    (
+        rm -rf "$PREFIX"/drive_c/tmp "$PREFIX_UMU"/drive_c/tmp
+        cd src/
+        chmod +x awl game-list
+        cp awl "$TREE"/
+        cp game-list "$TREE"/
+        ln -sf "$TREE"/awl "$HOME"/.local/bin/awl
+    )
 }
 
 case $1 in
