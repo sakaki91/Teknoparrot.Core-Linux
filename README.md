@@ -8,7 +8,7 @@ __If you would like to support the project's development (This is entirely optio
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/sakaki91)
 
 #### Getting Started: 
-First [check the compatibility list](https://www.github.com/sakaki91/Arcade.Runtime-Linux/wiki/2.-Currently-supported-games) to confirm that your game is documented.  
+First, [check the compatibility list](https://www.github.com/sakaki91/Arcade.Runtime-Linux/wiki/2.-Currently-supported-games) to confirm that your game is documented.  
 __I don't support games that require [APM3](https://github.com/sakaki91/Arcade.Wrapper-Linux/wiki/1.-About-the-Project#why-is-there-no-support-for-apm3-and-elfldr2)__ for obvious reasons (I don't pay for TeknoParrot, and I don't want to).  
 
 Did you encounter problems? *[Read this](https://github.com/sakaki91/Arcade.Runtime-Linux/wiki/1.-About-the-Project#how-does-the-error-report-work).*
