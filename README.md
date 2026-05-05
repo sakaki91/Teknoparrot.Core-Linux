@@ -13,11 +13,10 @@ __I don't support games that require [APM3](https://github.com/sakaki91/Arcade.W
 
 Did you encounter problems? *[Read this](https://github.com/sakaki91/Arcade.Runtime-Linux/wiki/1.-About-the-Project#how-does-the-error-report-work).*
 
-* [[ Installation ]](#installation)
 * [[ Extra Tweaks ]](https://github.com/sakaki91/Arcade.Wrapper-Linux/wiki/4.-Extra-Tweaks)
 * [[ Wiki ]](https://github.com/sakaki91/Arcade.Runtime-Linux/wiki)
 
-#### Installation:
+__Installation:__  
 __Script Dependencies:__ *[Check this out](https://github.com/sakaki91/Arcade.Runtime-Linux/wiki/3.-Dependencies-and-Distros-Hardware-tested.).*
 
     $ cd ~/
@@ -27,3 +26,9 @@ __Script Dependencies:__ *[Check this out](https://github.com/sakaki91/Arcade.Ru
     $ chmod +x install.sh
     $ ./install.sh
 	$ awl
+
+__What does the script do?__  
+Create 2 prefixes (wine, umu).  
+Installs the dependencies, which are:  
+`.NET 8 Desktop Runtime & Runtime, DirectX (Standalone Installer), DXVK, UMU-Proton & Wine Mono (for UMU).`  
+And creates a basic structure in `~/.local/share/awl/` making it possible to call the middleware with: `$ awl`
