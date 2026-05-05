@@ -14,7 +14,7 @@ __I don't support games that require [APM3](https://github.com/sakaki91/Arcade.W
 Did you encounter problems? *[Read this](https://github.com/sakaki91/Arcade.Runtime-Linux/wiki/1.-About-the-Project#how-does-the-error-report-work).*
 
 * [[ Installation ]](#installation)
-* [[ Extra Tweaks]](https://github.com/sakaki91/Arcade.Wrapper-Linux/wiki/4.-Extra-Tweaks)
+* [[ Extra Tweaks ]](https://github.com/sakaki91/Arcade.Wrapper-Linux/wiki/4.-Extra-Tweaks)
 * [[ Wiki ]](https://github.com/sakaki91/Arcade.Runtime-Linux/wiki)
 
 #### Installation:
