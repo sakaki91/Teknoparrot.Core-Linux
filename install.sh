@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SCRIPT_VERSION="3.3-1"
+SCRIPT_VERSION="3.3-2"
 DXVK_VERSION="2.7.1"
 UMU_VERSION="10.0-4"
 UMU_MONO_VERSION="10.0.0"
@@ -71,7 +71,7 @@ dependencyInstall(){
 
 case $1 in
     "--help")
-        echo -e "--help\t\tShow this message.\n--version\tShow wrapper version.\n--ignore-umu\tthis flag is usually the default in installations, as umu is only used for isolated titles like the wmmt-series."
+        echo -e "--help\t\tShow this message.\n--version\tShow wrapper version."
         exit
     ;;
     "--version")
