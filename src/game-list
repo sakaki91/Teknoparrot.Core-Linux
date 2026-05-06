@@ -38,7 +38,7 @@ printf "%-35s ${GREEN_COLOR}%-20s${NC} %-20s\n" "GTI Club - Supermini Festa!" "I
 printf "%-35s ${GREEN_COLOR}%-20s${NC} %-20s\n" "Ikaruga" "IT WORKS" "Wine."
 printf "%-35s ${GREEN_COLOR}%-20s${NC} %-20s\n" "Infinity Blade FX" "IT WORKS" "Wine."
 printf "%-35s ${BLUE_COLOR}%-20s${NC} %-20s\n" "Initial D: Arcade Stage 7AAX" "IT WORKS" "Wine."
-printf "%-35s ${GREEN_COLOR}%-20s${NC} %-20s\n" "Key of Avalon" "BROKEN" "Dolphin Emulator."
+printf "%-35s ${RED_COLOR}%-20s${NC} %-20s\n" "Key of Avalon" "BROKEN" "Dolphin Emulator."
 printf "%-35s ${GREEN_COLOR}%-20s${NC} %-20s\n" "Mario Kart: Arcade GP" "IT WORKS" "Dolphin Emulator."
 printf "%-35s ${GREEN_COLOR}%-20s${NC} %-20s\n" "Mario Kart: Arcade GP 2" "IT WORKS" "Dolphin Emulator."
 printf "%-35s ${GREEN_COLOR}%-20s${NC} %-20s\n" "Mario Kart: Arcade GP DX" "IT WORKS" "Wine."
