@@ -17,7 +17,7 @@ playRunWrapper(){
         PLAY_ROM_DIR="$HOME/.var/app/org.purei.Play/config/Play Data Files/arcaderoms"
         [[ ! -d "$FLATPAK_DIR"/app/org.purei.Play ]] && printf "$ERROR_LOG* Play! (Flatpak) emulator not found.$NC\n" && exit
         [[ ! -d "$TREE"/play ]] && ln -s "$PLAY_ROM_DIR" "$TREE"/play
-        printf "\e[1;33mWARNING:$NC The dump files for the Play emulator games MUST be in this folder:\n($BC$PLAY_ROM_DIR$NC).\notherwise an error will occur due to emulator limitations.\nPress 'enter' to contrinue" && read
+        printf "\e[1;33mWARNING:$NC The dump files for the Play emulator games MUST be in this folder:\n($BC$PLAY_ROM_DIR$NC).\notherwise an error will occur due to emulator limitations.\nPress 'enter' to continue" && read
         PLAY_ROM_SELECTION=$(zenity --file-selection --directory --title="Select the desired ROM (Play, Folder only):")
         if [[ -z "$PLAY_ROM_SELECTION" ]]; then
             printf "\n$ERROR_LOG* No rom selected. $NC\nWould you like to try again?\n"
