@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ERROR_LOG="\e[1;31m"
+ERROR_LOG="\e[1;31m*"
 NC="\033[0m"
 BC="\e[1m"
 
@@ -15,15 +15,20 @@ UMU_LOCATION=${TREE}/umu
 playRunWrapper(){
     while true; do
         PLAY_ROM_DIR="$HOME/.var/app/org.purei.Play/config/Play Data Files/arcaderoms"
-        [[ ! -d "$FLATPAK_DIR"/app/org.purei.Play ]] && printf "$ERROR_LOG* Play! (Flatpak) emulator not found.$NC\n" && exit
+        [[ ! -d "$FLATPAK_DIR"/app/org.purei.Play ]] && printf "$ERROR_LOG Emulator not found:$NC Play! (Flatpak).\n" && exit
         [[ ! -d "$TREE"/play ]] && ln -s "$PLAY_ROM_DIR" "$TREE"/play
         printf "\e[1;33mWARNING:$NC The dump files for the Play emulator games MUST be in this folder:\n($BC$PLAY_ROM_DIR$NC).\notherwise an error will occur due to emulator limitations.\nPress 'enter' to continue" && read
         PLAY_ROM_SELECTION=$(zenity --file-selection --directory --title="Select the desired ROM (Play, Folder only):")
         if [[ -z "$PLAY_ROM_SELECTION" ]]; then
-            printf "\n$ERROR_LOG* No rom selected. $NC\nWould you like to try again?\n"
+            printf "\n$ERROR_LOG No rom selected.$NC\nWould you like to try again?\n"
             read -p "[Y/n] " zenityDecision
-            if [[ $zenityDecision == "N" || $zenityDecision == "n" ]]; then
+            if [[ $zenityDecision == "Y" || $zenityDecision == "y" ]]; then
+                clear
+            elif [[ $zenityDecision == "N" || $zenityDecision == "n" ]]; then
                 break
+            else
+                printf "\n$ERROR_LOG Invalid option.$NC\n"
+                sleep 1.5
             fi
         else
             PLAY_ROM=$(basename $PLAY_ROM_SELECTION)
@@ -35,13 +40,19 @@ playRunWrapper(){
 
 dolphinRunWrapper(){
     while true; do
-        [[ ! -d "$FLATPAK_DIR"/app/org.DolphinEmu.dolphin-emu ]] && printf "$ERROR_LOG* Dolphin (Flatpak) emulator not found.$NC\n" && exit
+        [[ ! -d "$FLATPAK_DIR"/app/org.DolphinEmu.dolphin-emu ]] && printf "$ERROR_LOG Emulator not found:$NC Dolphin (Flatpak).\n" && exit
+        [[ ! -f "$HOME"/.var/app/org.DolphinEmu.dolphin-emu/data/dolphin-emu/Triforce/segaboot.gcm ]] && printf "$ERROR_LOG File not found:$NC segaboot.gcm\n==> (https://github.com/sakaki91/Arcade.Wrapper-Linux/issues/7)\n" && exit
         DOLPHIN_ROM=$(zenity --file-selection --title="Select the desired ROM (Dolphin):" )
         if [[ -z "$DOLPHIN_ROM" ]]; then
-            printf "\n$ERROR_LOG* No rom selected. $NC\nWould you like to try again?\n"
+            printf "\n$ERROR_LOG No rom selected.$NC\nWould you like to try again?\n"
             read -p "[Y/n] " zenityDecision
-            if [[ $zenityDecision == "N" || $zenityDecision == "n" ]]; then
+            if [[ "$zenityDecision" == "Y" || "$zenityDecision" == "y" ]]; then
+                clear
+            elif [[ $zenityDecision == "N" || $zenityDecision == "n" ]]; then
                 break
+            else
+                printf "\n$ERROR_LOG Invalid option.$NC\n"
+                sleep 1.5
             fi
         else
             flatpak run org.DolphinEmu.dolphin-emu "$DOLPHIN_ROM" &> /dev/null
@@ -63,17 +74,6 @@ teknoRunWrapper(){
 
 FLATPAK_DIR=$(flatpak --installations)
 case $1 in
-    "--help")
-        printf "$BC%-15s$NC\n" "[system]:"
-        printf "$BC%-15s$NC%-5s\n" "--help" "show this message."
-        printf "$BC%-15s$NC%-5s\n\n" "--dir" "opens the local awl files."
-        printf "$BC%-15s$NC\n" "[wrapper]:"
-        printf "$BC%-15s$NC%-5s\n" "--game-list" "Shows the compatibility list."
-        printf "$BC%-15s$NC%-5s\n" "--ns" "Opens the emulator compatible with Namco System [147/246]."
-        printf "$BC%-15s$NC%-5s\n" "--triforce" "Opens the emulator compatible with Sega Triforce."
-        printf "$BC%-15s$NC%-5s\n" "--tekno" "Opens the wine-wrapper compatible with TeknoParrot."
-        printf "$BC%-15s$NC%-5s\n" "--tekno-umu" "Opens the umu-wrapper compatible with TeknoParrot."
-    ;;
     "--dir")
         xdg-open "$HOME/.local/share/awl" &>> /dev/null
         printf "If nothing happens, go to: $BC$HOME/.local/share/awl$NC\n"
@@ -96,6 +96,14 @@ case $1 in
         teknoRunWrapper
     ;;
     *)
-        printf "$ERROR_LOG* Invalid option$NC (run: awl --help).\n"
+        printf "$BC%-15s$NC\n" "[system]:"
+        printf "$BC%-15s$NC%-5s\n" "--help" "show this message."
+        printf "$BC%-15s$NC%-5s\n\n" "--dir" "opens the local awl files."
+        printf "$BC%-15s$NC\n" "[wrapper]:"
+        printf "$BC%-15s$NC%-5s\n" "--game-list" "Shows the compatibility list."
+        printf "$BC%-15s$NC%-5s\n" "--ns" "Opens the emulator compatible with Namco System [147/246]."
+        printf "$BC%-15s$NC%-5s\n" "--triforce" "Opens the emulator compatible with Sega Triforce."
+        printf "$BC%-15s$NC%-5s\n" "--tekno" "Opens the wine-wrapper compatible with TeknoParrot."
+        printf "$BC%-15s$NC%-5s\n" "--tekno-umu" "Opens the umu-wrapper compatible with TeknoParrot."
     ;;
 esac
