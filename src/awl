@@ -72,7 +72,10 @@ teknoRunWrapper(){
     fi
 }
 
-FLATPAK_DIR=$(flatpak --installations)
+if command -v flatpak &> /dev/null; then
+    FLATPAK_DIR=$(flatpak --installations)
+fi
+
 case $1 in
     "--dir")
         xdg-open "$HOME/.local/share/awl" &>> /dev/null
