@@ -17,7 +17,7 @@ Did you encounter problems? *[Read this](https://github.com/sakaki91/Arcade.Runt
 * [[ Wiki ]](https://github.com/sakaki91/Arcade.Runtime-Linux/wiki)
 
 __Installation:__  
-__Script Dependencies:__ *[Check this out](https://github.com/sakaki91/Arcade.Runtime-Linux/wiki/3.-Dependencies-and-Distros-Hardware-tested.).*
+__Script Dependencies:__ *[Check this out](https://github.com/sakaki91/Arcade.Runtime-Linux/wiki/3.-Dependencies-and-Distros-Hardware-tested).*
 
     $ cd ~/
     $ git clone https://github.com/sakaki91/Arcade.Wrapper-Linux
